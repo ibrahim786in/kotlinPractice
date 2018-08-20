@@ -14,6 +14,7 @@ class AspectImageView : ImageView {
     override fun onMeasure(widthMEasureSpec: Int, heightMeasureSpec: Int) {
         val desireSize: Int
         val aspect: Float
+
         if (drawable == null) {
             desireSize = 0
             aspect = 1f

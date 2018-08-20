@@ -25,10 +25,11 @@ class BoxGridLayout : ViewGroup {
         mMaxChildren = mColumnCount * mColumnCount
 
         a.recycle()
-        mGridPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        mGridPaint!!.style = Paint.Style.STROKE
-        mGridPaint!!.color = strokeColor
-        mGridPaint!!.strokeWidth = strokeWidth.toFloat()
+        mGridPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            color = strokeColor
+            this.strokeWidth = strokeWidth.toFloat()
+        }
 
     }
 
@@ -44,11 +45,9 @@ class BoxGridLayout : ViewGroup {
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         for (i in 0 until childCount) {
-            val row = i / mColumnCount
-            val col = i % mColumnCount
             val child = getChildAt(i)
-            val left = col * child.measuredWidth
-            val top = row * child.measuredHeight
+            val left = (i % mColumnCount) * child.measuredWidth
+            val top = (i / mColumnCount) * child.measuredHeight
             child.layout(left, top, left + child.measuredWidth, top + child.measuredHeight)
         }
     }
